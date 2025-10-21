@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas.Api", "Pariqas.Api\Pariqas.Api.csproj", "{55118477-272B-47BF-9296-5FB3C14F4FB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas", "Pariqas\Pariqas.csproj", "{16930B1E-979B-45A8-A28E-249A3A2E9881}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55118477-272B-47BF-9296-5FB3C14F4FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55118477-272B-47BF-9296-5FB3C14F4FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55118477-272B-47BF-9296-5FB3C14F4FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55118477-272B-47BF-9296-5FB3C14F4FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
