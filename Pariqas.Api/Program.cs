@@ -13,6 +13,7 @@ public sealed class Program
         
         builder.Services.AddControllers();
         builder.Services.AddMemoryCache();
+        builder.Services.AddLogging();
         builder.Services.AddSignalR();
         builder.Services.AddIdentity();
         builder.Services.AddTokenAuthentication(builder.Configuration);
