@@ -15,7 +15,7 @@ public sealed class AuthenticationController : ControllerBase
     private readonly JwtService _jwt;
     private readonly UserManager<User> _userManager;
     
-    public AuthenticationController(JwtService jwt, UserManager<User>  userManager)
+    public AuthenticationController(JwtService jwt, UserManager<User> userManager)
     {
         _jwt = jwt;
         _userManager = userManager;
@@ -33,14 +33,14 @@ public sealed class AuthenticationController : ControllerBase
         bool valid = await _userManager.CheckPasswordAsync(user, request.Password);
         if (!valid)
         {
-            return Unauthorized();
+            return Unauthorized();       
         }
-
+        
         string token = _jwt.GenerateToken(user);
 
         return Ok(new TokenResponse(token));
     }
-
+    
     [HttpPost("sign-up")]
     public async Task<ActionResult> SignUp([FromBody] SignUpRequest request)
     {
@@ -52,17 +52,17 @@ public sealed class AuthenticationController : ControllerBase
 
         var user = new User
         {
-            UserName = request.Email,
             Email = request.Email,
-            CreatedAt = DateTime.UtcNow,
+            UserName = request.Email,
+            CreatedAt = DateTime.UtcNow
         };
         
         var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
-            return BadRequest(result.Errors);
+            return BadRequest();
         }
-
+        
         return Ok();
     }
 }
