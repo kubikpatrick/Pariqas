@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 using Pariqas.Api.Data;
@@ -16,6 +17,7 @@ public sealed class Program
         builder.Services.AddLogging();
         builder.Services.AddSignalR();
         builder.Services.AddIdentity();
+        builder.Services.AddManagers();
         builder.Services.AddTokenAuthentication(builder.Configuration);
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
         {
