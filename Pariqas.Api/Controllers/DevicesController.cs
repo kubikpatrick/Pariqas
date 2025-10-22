@@ -22,7 +22,7 @@ public sealed class DevicesController : AuthorizeControllerBase
     [HttpGet]
     public async Task<ActionResult> Index()
     {
-        var devices = await _context.Devices.Where(d => d.UserId == CurrentUserId) .ToListAsync();
+        var devices = await _context.Devices.Where(d => d.UserId == CurrentUserId).ToListAsync();
         
         return Ok(devices);
     }
