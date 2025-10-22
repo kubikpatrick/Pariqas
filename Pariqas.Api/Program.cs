@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
+using Pariqas.Api.Data;
+using Pariqas.Api.Extensions;
+
 namespace Pariqas.Api;
 
 public sealed class Program
@@ -9,8 +14,12 @@ public sealed class Program
         builder.Services.AddControllers();
         builder.Services.AddMemoryCache();
         builder.Services.AddSignalR();
-        builder.Services.AddAuthorization();
-        builder.Services.AddOpenApi();
+        builder.Services.AddIdentity();
+        builder.Services.AddTokenAuthentication(builder.Configuration);
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+        });
 
         var app = builder.Build();
         
@@ -20,6 +29,7 @@ public sealed class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
         
