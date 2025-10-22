@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using Pariqas.Api.Data;
 using Pariqas.Api.Services;
+using Pariqas.Api.Services.Managers;
 using Pariqas.Models.Identity;
 
 namespace Pariqas.Api.Extensions;
@@ -16,6 +17,13 @@ public static class DependencyInjectionExtensions
     {
         services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddManagers(this IServiceCollection services)
+    {
+        services.AddScoped<DeviceManager>();
+        
         return services;
     }
 
