@@ -22,11 +22,11 @@ public sealed class DevicesController : AuthorizeControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult<List<Device>>> Index()
     {
         var devices = await _deviceManager.FindAllForUserAsync(CurrentUserId);
-        
-        return Ok(devices);
+
+        return devices;
     }
     
     [HttpPost]
@@ -44,8 +44,8 @@ public sealed class DevicesController : AuthorizeControllerBase
         {
             return Problem(result.Message);
         }
-        
-        return Ok(device);
+
+        return device;
     }
     
     [HttpPatch("{id:guid}/location")]
