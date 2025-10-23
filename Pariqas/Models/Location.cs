@@ -27,8 +27,8 @@ public sealed class Location
     [NotMapped]
     public static Location Empty => new Location
     {
-        Longitude = 0,
-        Latitude = 0,
-        Timestamp = DateTime.UtcNow
+        Longitude = default,
+        Latitude = default,
+        Timestamp = default
     };
 }
