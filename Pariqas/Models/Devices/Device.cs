@@ -1,17 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using Microsoft.EntityFrameworkCore;
+
 using Pariqas.Models.Identity;
 
 namespace Pariqas.Models.Devices;
 
+[PrimaryKey(nameof(Id))]
 public sealed class Device
 {
     public Device()
     {
     }
     
-    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Required]
     public string Id { get; set; }
     
@@ -23,7 +26,7 @@ public sealed class Device
     
     [Required]
     public DeviceType Type { get; set; }
-    
+
     [Required]
     public Location Location { get; set; } = Location.Empty;
     
