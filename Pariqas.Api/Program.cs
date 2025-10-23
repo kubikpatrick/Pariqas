@@ -12,7 +12,10 @@ public sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+        });
         builder.Services.AddMemoryCache();
         builder.Services.AddLogging();
         builder.Services.AddSignalR();
