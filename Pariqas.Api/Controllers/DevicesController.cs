@@ -25,6 +25,18 @@ public sealed class DevicesController : AuthorizeControllerBase
 
         return devices;
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<Device>> Get([FromRoute] string id)
+    {
+        var device = await _deviceManager.FindByIdAsync(id, CurrentUserId);
+        if (device is null)
+        {
+            return NotFound();
+        }
+        
+        return device;
+    }
     
     [HttpPost]
     public async Task<ActionResult<Device>> Create([FromBody] CreateDeviceRequest request)
