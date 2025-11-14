@@ -32,7 +32,7 @@ public sealed class LocationWorker : BackgroundService
         var geolocator = new Geolocator
         {
             DesiredAccuracy = PositionAccuracy.High,
-            MovementThreshold = 1
+            MovementThreshold = 3
         };
         
         geolocator.PositionChanged += OnLocationChange;
