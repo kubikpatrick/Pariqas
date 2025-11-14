@@ -14,4 +14,5 @@ public sealed class ApplicationDbContext : IdentityDbContext<User>
     }
     
     public DbSet<Device> Devices { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 }
