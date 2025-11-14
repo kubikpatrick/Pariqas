@@ -21,13 +21,12 @@ public sealed class JwtService
     {
         Claim[] claims =
         [
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id)
         ];
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-
+        
         var token = new JwtSecurityToken(
             _configuration["Jwt:Issuer"],
             _configuration["Jwt:Audience"],
@@ -36,7 +35,7 @@ public sealed class JwtService
             DateTime.Now.AddMinutes(15),
             credentials
         );
-
+        
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
