@@ -24,7 +24,11 @@ public sealed class DeviceIdAccessor
             string content = await File.ReadAllTextAsync(path);
             if (!string.IsNullOrWhiteSpace(content) && Guid.TryParse(content, out var id))
             {
-                return id.ToString();
+                var device = await _http.GetFromJsonAsync<Device>($"devices/{id}");
+                if (device is not null)
+                {
+                    return id.ToString();
+                }
             }
         }
         
