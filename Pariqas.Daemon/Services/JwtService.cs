@@ -42,8 +42,7 @@ public sealed class JwtService
         var tokens = await response.Content.ReadFromJsonAsync<TokenResponse>() ?? throw new InvalidOperationException("Invalid refresh token response.");
 
         _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens.AccessToken);
-
-        _logger.LogInformation("Access token refreshed successfully at {timestamp}.", DateTime.UtcNow);
+        _logger.LogInformation("[{timestamp}] - Access token successfully refreshed.", DateTime.UtcNow);
     }
     
     private async Task GetTokensAsync()
