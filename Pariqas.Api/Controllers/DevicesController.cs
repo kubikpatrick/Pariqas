@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using Pariqas.Api.Data;
 using Pariqas.Api.Services.Managers;
 using Pariqas.Http.Requests;
 using Pariqas.Models;
@@ -12,19 +11,17 @@ namespace Pariqas.Api.Controllers;
 [Route("[controller]")]
 public sealed class DevicesController : AuthorizeControllerBase
 {
-    private readonly ApplicationDbContext _context;
     private readonly DeviceManager _deviceManager;
     
-    public DevicesController(ApplicationDbContext context, DeviceManager deviceManager)
+    public DevicesController(DeviceManager deviceManager)
     {
-        _context = context;
         _deviceManager = deviceManager;
     }
     
     [HttpGet]
     public async Task<ActionResult<List<Device>>> Index()
     {
-        var devices = await _deviceManager.FindAllForUserAsync(CurrentUserId);
+        var devices = await _deviceManager.FindForUserAsync(CurrentUserId);
 
         return devices;
     }
@@ -48,34 +45,34 @@ public sealed class DevicesController : AuthorizeControllerBase
         return device;
     }
     
-    [HttpPatch("{id:guid}/location")]
-    public async Task<ActionResult> Location([FromRoute] string id, Location location)
-    {
-        var device = await _deviceManager.FindOwnedByIdAsync(id, CurrentUserId);
-        if (device is null)
-        {
-            return NotFound();
-        }
-        
-        var result = await _deviceManager.UpdateLocationAsync(device, location);
-        if (!result.Succeeded)
-        {
-            return Problem();
-        }
-
-        return Ok();
-    }
-
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> Delete([FromRoute] string id)
     {
-        var device = await _deviceManager.FindOwnedByIdAsync(id, CurrentUserId);
+        var device = await _deviceManager.FindByIdAsync(id, CurrentUserId);
         if (device is null)
         {
             return NotFound();
         }
         
         var result = await _deviceManager.DeleteAsync(device);
+        if (!result.Succeeded)
+        {
+            return Problem(result.Message);
+        }
+        
+        return Ok();
+    }
+    
+    [HttpPatch("{id:guid}/location")]
+    public async Task<ActionResult> Location([FromRoute] string id, Location location)
+    {
+        var device = await _deviceManager.FindByIdAsync(id, CurrentUserId);
+        if (device is null)
+        {
+            return NotFound();
+        }
+        
+        var result = await _deviceManager.UpdateLocationAsync(device, location);
         if (!result.Succeeded)
         {
             return Problem(result.Message);
