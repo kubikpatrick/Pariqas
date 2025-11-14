@@ -19,4 +19,7 @@ public sealed class User : IdentityUser
     
     [NotMapped]
     public List<Device> Devices { get; set; }
+    
+    [NotMapped]
+    public List<RefreshToken> RefreshTokens { get; set; }
 }
