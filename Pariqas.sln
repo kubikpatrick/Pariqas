@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas.Api", "Pariqas.Api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas", "Pariqas\Pariqas.csproj", "{16930B1E-979B-45A8-A28E-249A3A2E9881}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas.Web", "Pariqas.Web\Pariqas.Web.csproj", "{56549CD9-28FD-41E0-AD54-BCA2B0B5A370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas.Daemon", "Pariqas.Daemon\Pariqas.Daemon.csproj", "{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16930B1E-979B-45A8-A28E-249A3A2E9881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56549CD9-28FD-41E0-AD54-BCA2B0B5A370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56549CD9-28FD-41E0-AD54-BCA2B0B5A370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56549CD9-28FD-41E0-AD54-BCA2B0B5A370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56549CD9-28FD-41E0-AD54-BCA2B0B5A370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
