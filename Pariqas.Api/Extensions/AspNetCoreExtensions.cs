@@ -23,6 +23,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddManagers(this IServiceCollection services)
     {
         services.AddScoped<DeviceManager>();
+        services.AddScoped<RefreshTokenManager>();
         
         return services;
     }
