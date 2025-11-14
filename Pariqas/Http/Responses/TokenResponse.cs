@@ -1,3 +1,3 @@
 namespace Pariqas.Http.Responses;
 
-public sealed record TokenResponse(string AccessToken);
+public sealed record TokenResponse(string AccessToken, string? RefreshToken = null);
