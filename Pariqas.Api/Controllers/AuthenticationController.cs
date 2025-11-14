@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Pariqas.Api.Services;
+using Pariqas.Api.Services.Managers;
 using Pariqas.Http.Requests;
 using Pariqas.Http.Responses;
 using Pariqas.Models.Identity;
@@ -14,11 +15,13 @@ public sealed class AuthenticationController : ControllerBase
 {
     private readonly JwtService _jwt;
     private readonly UserManager<User> _userManager;
+    private readonly RefreshTokenManager _refreshTokenManager;
     
-    public AuthenticationController(JwtService jwt, UserManager<User> userManager)
+    public AuthenticationController(JwtService jwt, UserManager<User> userManager, RefreshTokenManager refreshTokenManager)
     {
         _jwt = jwt;
         _userManager = userManager;
+        _refreshTokenManager = refreshTokenManager;
     }
 
     [HttpPost("login")]
@@ -27,7 +30,7 @@ public sealed class AuthenticationController : ControllerBase
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user is null)
         {
-            return NotFound();
+            return NotFound("User does not exist.");
         }
         
         bool valid = await _userManager.CheckPasswordAsync(user, request.Password);
@@ -37,8 +40,13 @@ public sealed class AuthenticationController : ControllerBase
         }
         
         string token = _jwt.GenerateToken(user);
+        var refreshToken = await _refreshTokenManager.CreateAsync(user);
+        if (refreshToken is null)
+        {
+            return StatusCode(500);       
+        }
 
-        return Ok(new TokenResponse(token));
+        return new TokenResponse(token, refreshToken.Token);
     }
     
     [HttpPost("sign-up")]
@@ -60,9 +68,28 @@ public sealed class AuthenticationController : ControllerBase
         var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
-            return BadRequest();
+            return BadRequest(result.Errors);
         }
         
         return Ok();
+    }
+
+    [HttpPost("refresh")]
+    public async Task<ActionResult<TokenResponse>> Refresh([FromBody] RefreshRequest request)
+    {
+        if (string.IsNullOrEmpty(request.RefreshToken))
+        {
+            return Unauthorized();
+        }
+        
+        var refreshToken = await _refreshTokenManager.FindByTokenAsync(request.RefreshToken);
+        if (refreshToken is null || !_refreshTokenManager.IsValid(refreshToken))
+        {
+            return Unauthorized();
+        }
+
+        string newToken = _jwt.GenerateToken(refreshToken.User);
+
+        return new TokenResponse(newToken);
     }
 }
