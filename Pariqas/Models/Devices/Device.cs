@@ -33,6 +33,6 @@ public sealed class Device
     [Required]
     public string UserId { get; set; }
     
-    [NotMapped]
+    [ForeignKey(nameof(UserId))]
     public User User { get; set; }
 }
