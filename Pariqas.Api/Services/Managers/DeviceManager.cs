@@ -93,7 +93,6 @@ public sealed class DeviceManager
         await _context.SaveChangesAsync();
         await _hub.Clients.User(device.UserId).SendAsync(EventNames.LocationUpdate, device.Id, location);
         
-        
         return OperationResult.Success();
     }
 }
