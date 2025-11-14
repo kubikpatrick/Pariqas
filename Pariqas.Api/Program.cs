@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
+
 using Microsoft.EntityFrameworkCore;
 
 using Pariqas.Api.Data;
 using Pariqas.Api.Extensions;
+using Pariqas.Api.Hubs;
 
 namespace Pariqas.Api;
 
@@ -35,9 +37,11 @@ public sealed class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseCors(cors => cors.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin());
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
+        app.MapHub<LocationHub>("/hubs/location");
         
         app.Run();
     }
