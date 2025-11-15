@@ -10,7 +10,7 @@ namespace Pariqas.Api;
 
 public sealed class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +29,19 @@ public sealed class Program
         {
             options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
         });
-
+        
         var app = builder.Build();
         
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+        }
+        
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            
+            await db.Database.MigrateAsync();
         }
 
         app.UseHttpsRedirection();
