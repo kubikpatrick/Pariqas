@@ -13,13 +13,38 @@
 @using Pariqas.Models
 @using Pariqas.Models.Devices
 @using Pariqas.Web.Services
+@using Pariqas.Web.Components
 
 @inject HttpClient Http
 @inject TokenService TokenService
 
 <PageTitle>Home</PageTitle>
 
-<MapLibre @ref="map" Options="options" Class="w-100 vh-100" OnLoad="OnMapInitializedAsync" />
+<div class="row g-0">
+    <div class="col-0 col-sm-3 col-md-2">
+        @if (devices is null || devices.Count == 0)
+        {
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <Spinner />
+            </div>
+        }
+        else
+        {
+            <div class="row gy-2 p-2">
+                @foreach (var device in devices)
+                {
+                    <div class="col-12">
+                        <DeviceCard Device="device"></DeviceCard>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    
+    <div class="col-12 col-sm-9 col-md-10">
+        <MapLibre @ref="map" Options="options" Class="w-100 vh-100" OnLoad="OnMapInitializedAsync"/>
+    </div>
+</div>
 
 @code
 {
@@ -39,13 +64,13 @@
 
     private HubConnection connection;
     private List<Device> devices;
-    
     private MarkerService MarkerService => new MarkerService(map);
 
     protected override async Task OnInitializedAsync()
     {
+        devices = await Http.GetFromJsonAsync<List<Device>>("https://pariqas.onrender.com/devices");
         connection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:7158/hubs/location", options =>
+            .WithUrl("https://pariqas.onrender.com/hubs/location", options =>
             {
                 options.AccessTokenProvider = async () => await TokenService.GetTokenAsync();
             })
@@ -54,14 +79,11 @@
 
         connection.On<string, Location>(EventNames.LocationUpdate, OnLocationUpdateAsync);
         
-        devices = await Http.GetFromJsonAsync<List<Device>>("https://localhost:7158/devices");
-        
         await connection.StartAsync();
     }
 
     private async Task OnMapInitializedAsync(EventArgs arg)
     {
-        
         foreach (var device in devices)
         {
             string image = device.Type switch
@@ -83,6 +105,7 @@
 
         await map.AddControl(ControlType.NavigationControl, ControlPosition.TopRight);
         await map.AddControl(ControlType.GlobeControl, ControlPosition.TopRight);
+        await map.AddControl(ControlType.GeolocateControl, ControlPosition.TopRight);
     }
 
     private async Task OnLocationUpdateAsync(string id, Location location)
