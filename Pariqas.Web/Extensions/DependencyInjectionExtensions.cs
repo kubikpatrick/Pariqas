@@ -7,6 +7,12 @@ public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddHttpClient(this IServiceCollection services)
     {
-        return services.AddScoped(sp => new HttpClient(new JwtAuthorizationHandler(sp.GetRequiredService<TokenService>())));
+        return services.AddScoped(sp =>
+        {
+            var tokenService = sp.GetRequiredService<TokenService>();
+            var serverUrlService = sp.GetRequiredService<ServerUrlService>();
+
+            return new HttpClient(new JwtAuthorizationHandler(tokenService, serverUrlService));
+        });
     }
 }
