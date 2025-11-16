@@ -20,8 +20,9 @@ public sealed class Program
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddBlazoredLocalStorage();
-        builder.Services.AddHttpClient();
         builder.Services.AddScoped<TokenService>();
+        builder.Services.AddScoped<ServerUrlService>();
+        builder.Services.AddHttpClient();
         builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
 
         await builder.Build().RunAsync();
