@@ -1,5 +1,7 @@
 ﻿@page "/login"
 
+@layout AuthenticationLayout
+
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
@@ -8,6 +10,8 @@
 @using Pariqas.Http.Requests
 @using Pariqas.Http.Responses
 @using Pariqas.Web.Services
+
+<PageTitle>Login</PageTitle>
 
 <div class="d-flex align-items-center justify-content-center vh-100 bg-light">
     <EditForm Model="request" OnValidSubmit="Submit">
@@ -48,7 +52,7 @@
     
     private async Task Submit()
     {
-        var response = await Http.PostAsJsonAsync("https://localhost:7158/authentication/login", request);
+        var response = await Http.PostAsJsonAsync("https://pariqas.onrender.com/authentication/login", request);
         if (!response.IsSuccessStatusCode)
         {
             
