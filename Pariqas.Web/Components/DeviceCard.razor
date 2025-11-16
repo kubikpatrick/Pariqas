@@ -1,0 +1,25 @@
+﻿@using Humanizer
+
+@using Pariqas.Models.Devices
+
+<div class="d-flex border border-light-subtle align-items-center p-3 bg-white rounded-4">
+    @if (Device.Type is DeviceType.Computer)
+    {
+        <img src="images/computer.png" alt="Computer image" class="rounded-circle" style="width: 45px; height: 45px;">
+    }
+    else
+    {
+        <img src="images/smartphone.png" alt="Smartphone image" class="rounded-circle" style="width: 45px; height: 45px;">
+    }
+
+    <div class="ms-2">
+        <div class="fw-semibold" style="font-size: 0.8rem;">@Device.Name</div>
+        <div class="small text-muted" style="font-size: 0.675rem;">@Device.Location.Timestamp.Humanize()</div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public required Device Device { get; set; }
+}
