@@ -24,8 +24,8 @@ public sealed class DeviceIdAccessor
             string content = await File.ReadAllTextAsync(path);
             if (!string.IsNullOrWhiteSpace(content) && Guid.TryParse(content, out var id))
             {
-                var device = await _http.GetFromJsonAsync<Device>($"devices/{id}");
-                if (device is not null)
+                var response = await _http.GetAsync($"devices/{id}");
+                if (response.IsSuccessStatusCode)
                 {
                     return id.ToString();
                 }
@@ -49,7 +49,7 @@ public sealed class DeviceIdAccessor
         var device = await response.Content.ReadFromJsonAsync<Device>();
         if (device is null)
         {
-            
+            throw new InvalidOperationException("Invalid device response.");
         }
         
         _currentDevice.Id = device.Id;
