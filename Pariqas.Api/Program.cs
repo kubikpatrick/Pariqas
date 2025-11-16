@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 using Pariqas.Api.Data;
 using Pariqas.Api.Extensions;
-using Pariqas.Api.Hubs;
 
 namespace Pariqas.Api;
 
@@ -41,7 +40,11 @@ public sealed class Program
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             
-            await db.Database.MigrateAsync();
+            bool created = await db.Database.EnsureCreatedAsync();
+            if (!created)
+            {
+                await db.Database.MigrateAsync();
+            }
         }
 
         app.UseHttpsRedirection();
@@ -49,8 +52,8 @@ public sealed class Program
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
-        app.MapHub<LocationHub>("/hubs/location");
-        
-        app.Run();
+        app.MapHubs();
+
+        await app.RunAsync();
     }
 }
