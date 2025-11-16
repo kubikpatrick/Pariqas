@@ -1,5 +1,10 @@
+@font-face {
+    "font-family": "Pariqas";
+    src: url("../fonts/pariqas.woff2") format("woff");
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Pariqas", 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1:focus {
