@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 using Pariqas.Api.Data;
+using Pariqas.Api.Hubs;
 using Pariqas.Api.Services;
 using Pariqas.Api.Services.Managers;
 using Pariqas.Models.Identity;
@@ -69,5 +70,12 @@ public static class DependencyInjectionExtensions
         });
         
         return services;
+    }
+
+    public static WebApplication MapHubs(this WebApplication app)
+    {
+        app.MapHub<LocationHub>("/hubs/location");
+
+        return app;
     }
 }
