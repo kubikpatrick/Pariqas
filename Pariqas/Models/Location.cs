@@ -32,6 +32,11 @@ public sealed class Location
         Timestamp = default
     };
     
+    public async Task<string> ToAddressAsync()
+    {
+        throw new NotImplementedException();
+    }
+    
     public static int CalculateDistance(Location location1, Location location2)
     {
         const double R = 6371.0;
@@ -51,5 +56,4 @@ public sealed class Location
 
         return (int)Math.Round(distance);
     }
-
 }
