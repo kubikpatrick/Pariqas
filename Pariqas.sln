@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas.Web", "Pariqas.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pariqas.Daemon", "Pariqas.Daemon\Pariqas.Daemon.csproj", "{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{AC435EB7-EEC4-46FF-80EF-0579A75880F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,8 @@ Global
 		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E0BE9BA-A0C1-4BA6-A7EF-8B7D5D86A1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56549CD9-28FD-41E0-AD54-BCA2B0B5A370} = {AC435EB7-EEC4-46FF-80EF-0579A75880F3}
 	EndGlobalSection
 EndGlobal
