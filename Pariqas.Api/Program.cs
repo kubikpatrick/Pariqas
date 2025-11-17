@@ -35,15 +35,19 @@ public sealed class Program
         {
             app.MapOpenApi();
         }
-        
-        using (var scope = app.Services.CreateScope())
+
+        bool migrateAtRuntime = builder.Configuration.GetValue<bool>("MigrateAtRuntime");
+        if (migrateAtRuntime)
         {
-            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            
-            bool created = await db.Database.EnsureCreatedAsync();
-            if (!created)
+            using (var scope = app.Services.CreateScope())
             {
-                await db.Database.MigrateAsync();
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            
+                bool created = await db.Database.EnsureCreatedAsync();
+                if (!created)
+                {
+                    await db.Database.MigrateAsync();
+                }
             }
         }
 
