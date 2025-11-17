@@ -7,7 +7,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Pariqas.Api.csproj", "Pariqas.Api/"]
+COPY ["Pariqas.Api/Pariqas.Api.csproj", "Pariqas.Api/"]
 RUN dotnet restore "Pariqas.Api/Pariqas.Api.csproj"
 COPY . .
 WORKDIR "/src/Pariqas.Api"
